@@ -194,6 +194,9 @@ void jogo(){
                 if(tecla == 's'){
                     jogo();
                 }
+                if(tecla == 'n'){
+                    main();
+                }
                 hide_cursor(true);
                 if(tecla == 'n'){
                     jogando = tecla == 's';
