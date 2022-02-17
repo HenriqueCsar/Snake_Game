@@ -141,9 +141,10 @@ int main(){
     maximize_window();
     get_size_window(&DIMENSAO_X, &DIMENSAO_Y);
     run_cursor();
+    while (1==1){
     menu_inicial();
     jogo();        
-    menu_inicial();
+    }
 
     return 0;
 }
@@ -189,6 +190,9 @@ void jogo(){
                 while(tecla != 's' && tecla != 'n'){
                     imprime_mensagem("TECLA INCORRETA!, deseja reiniciar? [s/n] ");
                     scanf("%c",&tecla);
+                }
+                if(tecla == 's'){
+                    jogo();
                 }
                 hide_cursor(true);
                 if(tecla == 'n'){
