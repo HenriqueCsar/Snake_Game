@@ -81,8 +81,8 @@ FILA    *cria_fila();
 char    **cria_matriz();
 DIRECAO *cria_direcao();
 
-void menu_inicial(int jogar);
-
+void menu_inicial();
+void jogo();
 void imprime_cobra(COBRA *cobra);
 void imprime_maca(MACA *maca);
 void imprime_borda(char **matriz);
@@ -131,6 +131,9 @@ void hide_cursor(bool hide);
 void run_cursor();
 void maximize_window();
 
+//======= VARIAVEIS GLOBAIS =========//
+// Velocidade
+int speed = 100;
 //============== MAIN ============//
 int main(){
     
@@ -138,8 +141,14 @@ int main(){
     maximize_window();
     get_size_window(&DIMENSAO_X, &DIMENSAO_Y);
     run_cursor();
-    menu_inicial(1);
+    menu_inicial();
+    jogo();        
+    menu_inicial();
 
+    return 0;
+}
+//============= JOGO ==============//
+void jogo(){
     //Iniciando jogo
     bool jogando = true;
     do{
@@ -160,11 +169,11 @@ int main(){
         imprime_obstaculo(quadro);
         atualiza_area_trabalho(quadro, cobra);
 
-        //Atualiza��o de frames    
+        //Atualizacao de frames    
         int tecla = getch();
         do{           
-            if(tecla == SETAS){  //C�digo das setas
-                tecla = getch(); //Dire��o da seta
+            if(tecla == SETAS){  //Codigo das setas
+                tecla = getch(); //Direcao da seta
 
                 atualiza_direcao(tecla, cobra->direcao);
             }
@@ -182,9 +191,11 @@ int main(){
                     scanf("%c",&tecla);
                 }
                 hide_cursor(true);
-                jogando = tecla == 's';
-                vivo = false;
-                break;
+                if(tecla == 'n'){
+                    jogando = tecla == 's';
+                    //vivo = false;
+                    break;
+                }
             }
 
             if(verifica_maca(elm_coli)){
@@ -193,7 +204,7 @@ int main(){
             }
 
             atualiza_cobra(cobra);
-            Sleep(100);        
+            Sleep(speed);        
 
             if(kbhit())
                 tecla = getch();
@@ -203,15 +214,9 @@ int main(){
         libera_cobra(cobra);
         libera_maca(maca);
     }while(jogando);
-
-        
     hide_cursor(false);
     imprime_mensagem("FIM DE JOGO!, tecle qualquer tecla para fechar...");
-    menu_inicial(1);
-
-    return 0;
 }
-
 //====== ALOCACAO DE TAD's ========//
 COBRA *cria_cobra(){
     
@@ -388,7 +393,7 @@ void imprime_mensagem(char *mensagem){
 }
 
 
-void menu_inicial(int jogar){
+void menu_inicial(){
     int jogar_number;
     system("cls");
     set_char_by_cursor(178, 55, 10);
@@ -409,16 +414,19 @@ void menu_inicial(int jogar){
         case 1:
             system("cls");
             imprime_mensagem("Vamos la - Voce escolheu o nivel Dificil ! ");
+            speed = 20;
             system("pause>nul");
             break;
         case 2:
             system("cls");
             imprime_mensagem("Vamos la - Voce escolheu o nivel Medio ");
+            speed = 50;
             system("pause>nul");
             break;
         case 3:
             system("cls");
             imprime_mensagem("Vamos la - Voce escolheu o nivel Facil ");
+            speed = 100;
             system("pause>nul");
             break;
     }
@@ -826,11 +834,11 @@ char get_char_by_cursor(int x,int y){
 
 void hide_cursor(bool hide)
 {
-   HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-   CONSOLE_CURSOR_INFO info;
-   info.dwSize = 100;
-   info.bVisible = !hide;
-   SetConsoleCursorInfo(consoleHandle, &info);
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO info;
+    info.dwSize = 100;
+    info.bVisible = !hide;
+    SetConsoleCursorInfo(consoleHandle, &info);
 }
 
 void maximize_window()
