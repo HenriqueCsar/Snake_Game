@@ -110,6 +110,7 @@ void libera_cobra(COBRA *cobra);
 void libera_maca(MACA *maca);
 void libera_fila(FILA *fila);
 void libera_direcao(DIRECAO *direcao);
+void imprime_placar(int n_maca);
 
 void alimenta_cobra(COBRA *cobra);
 void alimenta_fila(FILA *fila, void *val);
@@ -134,6 +135,7 @@ void maximize_window();
 //======= VARIAVEIS GLOBAIS =========//
 // Velocidade
 int speed = 100;
+int n_maca = 0;
 //============== MAIN ============//
 int main(){
     
@@ -166,6 +168,7 @@ void jogo(){
         //TODO: sortear no meio
         imprime_maca(maca);
         imprime_cobra(cobra);
+        imprime_placar(n_maca);
         //TODO: colocar pra cima
         imprime_obstaculo(quadro);
         atualiza_area_trabalho(quadro, cobra);
@@ -194,6 +197,7 @@ void jogo(){
                 if(tecla == 's'){
                     jogo();
                 }
+
                 if(tecla == 'n'){
                     main();
                 }
@@ -206,8 +210,10 @@ void jogo(){
             }
 
             if(verifica_maca(elm_coli)){
+                n_maca=n_maca+1;
                 alimenta_cobra(cobra);
                 atualiza_maca(cobra, quadro);
+                imprime_placar(n_maca);
             }
 
             atualiza_cobra(cobra);
@@ -316,6 +322,13 @@ void imprime_maca(MACA *maca){
     ROW * r = maca->row;
 
     set_char_by_cursor(r->elm,r->pos_x,r->pos_y);
+}
+
+void imprime_placar(int n_maca){
+    set_char_by_cursor(EMPTY_ROW, 10, 2);
+    printf("%u", n_maca);
+    set_char_by_cursor(EMPTY_ROW, 3, 2);
+    printf("Pontos:");
 }
 
 void imprime_borda(char **matriz){
