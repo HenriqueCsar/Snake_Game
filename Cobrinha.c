@@ -9,7 +9,6 @@
 #include<dos.h>
 
 //========== CONSTANTES =========//
-#define OBS_RAIZES 30
 #define OBS_ROWS 30
 #define OBS_BLOK 5
 #define OFFSET_X 2
@@ -72,6 +71,7 @@ typedef struct FILA{
 
 //=========== VARI�VEIS ==========//
 int DIMENSAO_X, DIMENSAO_Y;
+int OBS_RAIZES = 30;
 
 //========== ASSINATURAS =========//
 COBRA   *cria_cobra();
@@ -81,7 +81,7 @@ FILA    *cria_fila();
 char    **cria_matriz();
 DIRECAO *cria_direcao();
 
-void menu_inicial();
+void menu_inicial(char Nome_jogador);
 void jogo();
 void imprime_cobra(COBRA *cobra);
 void imprime_maca(MACA *maca);
@@ -110,7 +110,7 @@ void libera_cobra(COBRA *cobra);
 void libera_maca(MACA *maca);
 void libera_fila(FILA *fila);
 void libera_direcao(DIRECAO *direcao);
-void imprime_placar(int n_maca);
+void imprime_placar(int n_maca, int nivel);
 
 void alimenta_cobra(COBRA *cobra);
 void alimenta_fila(FILA *fila, void *val);
@@ -136,15 +136,41 @@ void maximize_window();
 // Velocidade
 int speed = 100;
 int n_maca = 0;
+int n_maca_ant = 0;
+char Nome_jogador_input[20] = "Desconhecido";
+int jogar_number;
+int jogar_number_ant;
+int nivel;
+
+
+
 //============== MAIN ============//
 int main(){
-    
+
+    if(n_maca != 0){
+    char *buf; 
+    size_t sz;
+    sz = snprintf(NULL, 0, "\nJogador: %s  ----  Macas: %d ---- Nivel: %d\n", Nome_jogador_input, n_maca, jogar_number);
+    buf = (char *)malloc(sz + 1);
+    snprintf(buf, sz+1, "\nJogador: %s  ----  Macas: %d ---- Nivel: %d\n", Nome_jogador_input, n_maca, jogar_number);
+    FILE *file;
+
+    file = fopen("records.txt", "a+");
+   
+    fwrite(buf, 1, sizeof("\nJogador: %d  ----  Macas: %d ---- Nivel: %d  \n"), file);
+    fclose(file);
+    }
+
+    system("title SNAKE GAMER");
     //Iniciando tela
+    jogar_number_ant = jogar_number;
+    n_maca_ant = n_maca;
+    n_maca = 0;
     maximize_window();
     get_size_window(&DIMENSAO_X, &DIMENSAO_Y);
     run_cursor();
     while (1==1){
-    menu_inicial();
+    menu_inicial(*Nome_jogador_input);
     jogo();        
     }
 
@@ -152,6 +178,7 @@ int main(){
 }
 //============= JOGO ==============//
 void jogo(){
+    n_maca = 0;
     //Iniciando jogo
     bool jogando = true;
     do{
@@ -168,7 +195,7 @@ void jogo(){
         //TODO: sortear no meio
         imprime_maca(maca);
         imprime_cobra(cobra);
-        imprime_placar(n_maca);
+        imprime_placar(n_maca, nivel);
         //TODO: colocar pra cima
         imprime_obstaculo(quadro);
         atualiza_area_trabalho(quadro, cobra);
@@ -191,10 +218,11 @@ void jogo(){
                 imprime_mensagem("VOCE COLIDIU!, deseja reiniciar? [s/n] ");
                 scanf("%c",&tecla);
                 while(tecla != 's' && tecla != 'n'){
-                    imprime_mensagem("TECLA INCORRETA!, deseja reiniciar? [s/n] ");
+                    imprime_mensagem("VOCE COLIDIU!, deseja reiniciar? [s/n] ");
                     scanf("%c",&tecla);
                 }
                 if(tecla == 's'){
+                    hide_cursor(true);
                     jogo();
                 }
 
@@ -210,10 +238,11 @@ void jogo(){
             }
 
             if(verifica_maca(elm_coli)){
+                printf("*");
                 n_maca=n_maca+1;
                 alimenta_cobra(cobra);
                 atualiza_maca(cobra, quadro);
-                imprime_placar(n_maca);
+                imprime_placar(n_maca, nivel);
             }
 
             atualiza_cobra(cobra);
@@ -324,11 +353,19 @@ void imprime_maca(MACA *maca){
     set_char_by_cursor(r->elm,r->pos_x,r->pos_y);
 }
 
-void imprime_placar(int n_maca){
+void imprime_placar(int n_maca, int nivel){
+    
+    //Printar maçãs
     set_char_by_cursor(EMPTY_ROW, 10, 2);
     printf("%u", n_maca);
     set_char_by_cursor(EMPTY_ROW, 3, 2);
-    printf("Pontos:");
+    printf("Macas:");
+
+    //Printar Nível
+    set_char_by_cursor(EMPTY_ROW, 22, 2);
+    printf("%u", nivel);
+    set_char_by_cursor(EMPTY_ROW, 15, 2);
+    printf("Nivel:");
 }
 
 void imprime_borda(char **matriz){
@@ -412,44 +449,83 @@ void imprime_mensagem(char *mensagem){
     set_char_by_cursor(EMPTY_ROW,s_x + size, div_y);
 }
 
+long int findSize(char file_name[])
+{
+    FILE* fp = fopen(file_name, "r");
+  
+    if (fp == NULL) {
+        printf("");
+        return -1;
+    }
+  
+    fseek(fp, 0L, SEEK_END);
+  
+    long int res = ftell(fp);
+  
+    fclose(fp);
+  
+    return res;
+}
 
-void menu_inicial(){
-    int jogar_number;
+
+void menu_inicial(char Nome_jogador){
+    int res1;
     system("cls");
-    set_char_by_cursor(178, 55, 10);
-    puts("Records:");
-    set_char_by_cursor(178, 75, 14);
-    puts("DIFICIL  - 1");
-    set_char_by_cursor(178, 75, 13);
-    puts("MEDIO - 2");
-    set_char_by_cursor(178, 75, 12);
-    puts("FACIL - 3");
+    char *filename = "records.txt";
+    FILE *fp = fopen(filename, "r");
+    res1 = findSize("records.txt");
+
+    char ch;
+    set_char_by_cursor(EMPTY_ROW, 16, 12);
+    printf("Ultimas Jogadas: \n");
+    while ((ch = fgetc(fp)) != EOF)
+        putchar(ch);
+    fclose(fp);
+    set_char_by_cursor(EMPTY_ROW, 57, 11);
+
+    printf("Jogador: %s  ----  Macas: %d ---- Nivel: %d", Nome_jogador_input, n_maca_ant, jogar_number_ant);
+    set_char_by_cursor(EMPTY_ROW, 75, 18);
+    puts("|DIFICIL  - 3|");
+    set_char_by_cursor(EMPTY_ROW, 65, 18);
+    puts("|MEDIO - 2|");
+    set_char_by_cursor(EMPTY_ROW, 55, 18);
+    puts("|FACIL - 1|");
+    set_char_by_cursor(EMPTY_ROW, 89, 18);
+    puts("|Excluir Jogadas - 4|");
     imprime_mensagem("O qual nivel de jogo voce deseja jogar? ");
     scanf("%d", &jogar_number);
-
-    imprime_mensagem("VAMOS JOGAR O JOGINHO DA COBRINHA !!");
     system("pause>nul");
-
     switch(jogar_number){
-        case 1:
-            system("cls");
-            imprime_mensagem("Vamos la - Voce escolheu o nivel Dificil ! ");
-            speed = 20;
-            system("pause>nul");
-            break;
-        case 2:
-            system("cls");
-            imprime_mensagem("Vamos la - Voce escolheu o nivel Medio ");
-            speed = 50;
-            system("pause>nul");
+        case 4:
+            remove("records.txt");
+            main();
             break;
         case 3:
+            nivel=3;
             system("cls");
-            imprime_mensagem("Vamos la - Voce escolheu o nivel Facil ");
+            imprime_mensagem("Qual seu nome?: ");
+            speed = 50;
+            OBS_RAIZES = 30;
+            scanf("%s", &Nome_jogador_input);
+            break;
+        case 2:
+            nivel=2;
+            system("cls");
+            imprime_mensagem("Qual seu nome?: ");
+            speed = 70;
+            OBS_RAIZES = 15; //Variavel de incrementação de obstáculos
+            scanf("%s", &Nome_jogador_input);
+            break;
+        case 1:
+            nivel=1;
+            system("cls");
+            imprime_mensagem("Qual seu nome?: ");
             speed = 100;
-            system("pause>nul");
+            OBS_RAIZES = 10;
+            scanf("%s", &Nome_jogador_input);
             break;
     }
+
 }
 
 //=========== ATUALIZA��ES ==========//
