@@ -1,0 +1,135 @@
+body, *{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #f2f2f2;
+}
+
+
+.nome-apresentacao{
+    color: #123e6b;
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    letter-spacing: 0.08em;
+}
+
+
+div.select{
+    padding:10px 25px;
+    background-color: white;
+    border:1px solid rgba(0, 0, 0, 0.342);
+    color:rgba(0, 0, 0, 0.849);
+    position: relative;
+    border-radius:5px;
+    padding-right:100px;
+    cursor: pointer;
+}
+
+div.select:after {
+    border-radius:5px;
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right:0;
+    bottom: 0;
+    font-size: 10px;
+    color: rgb(0, 0, 0);
+    padding: 15px 15px;
+    pointer-events: none;
+}
+
+
+@keyframes anim_option{
+    from{
+        opacity:0%;
+    }
+    to{
+        opacity:100%;
+    }
+}
+
+.option{
+    display:none;
+position:absolute;
+top:50px;
+left:0;
+width:100%;
+border-radius:5px;
+background-color: white;
+padding:10px 10px;
+z-index: 10;
+box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.178);
+animation: anim_option 0.60s alternate 0s;
+}
+
+a{text-decoration: none; color:rgb(20, 20, 20);}
+a:hover{text-decoration: none; color:white;}
+
+
+.option_final{letter-spacing:0.05em;cursor:pointer;margin-top:10px;  font-size: 15px; transition:padding 0.30s}
+
+.option_final:hover{background-color: #123e6b; color:white;border-radius:2px; padding-left:10px}
+
+
+
+.select_disabled{
+    user-select: none; 
+}
+
+.selected{
+    color:red;
+    display: none;
+}
+
+
+
+.center{
+    position:relative;
+    width:20%;
+    left:calc(50% - 20%/2);
+}
+
+.participante{
+    border:0.5px solid rgba(0, 0, 0, 0.192);
+    border-radius:2px;
+    margin-left:10px;
+    display: block;
+    padding:10px 25px;
+    position: relative;
+    height:200px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.13);
+}
+
+.participante img{
+    border-radius:3px;
+}
+
+.text-titulo{
+    font-weight: bolder;
+    font-size:20px;
+    letter-spacing:0.06em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color:#123e6b;
+    margin-bottom: 10px;
+}
+
+.text-descricao{
+    font-size:15px;
+    letter-spacing:0.03em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color:#3a3b3b;
+    margin-bottom: 10px;
+    text-align:justify;
+    display:block;
+}
+
+.menu-img{
+    opacity: 85%;
+    transition: opacity 0.25s;
+}
+
+.menu-img:hover{
+    opacity: 100%;
+}

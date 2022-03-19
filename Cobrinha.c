@@ -9,7 +9,7 @@
 #include<dos.h>
 
 //========== CONSTANTES =========//
-#define OBS_ROWS 30
+#define OBS_ROWS 30 
 #define OBS_BLOK 5
 #define OFFSET_X 2
 
