@@ -475,6 +475,7 @@ void menu_inicial(char Nome_jogador){
     FILE *fp = fopen(filename, "r");
     res1 = findSize("records.txt");
 
+
     char ch;
     set_char_by_cursor(EMPTY_ROW, 16, 12);
     printf("Ultimas Jogadas: \n");
@@ -482,16 +483,21 @@ void menu_inicial(char Nome_jogador){
         putchar(ch);
     fclose(fp);
     set_char_by_cursor(EMPTY_ROW, 57, 11);
+    
+    int size = 1;
 
-    printf("Jogador: %s  ----  Macas: %d ---- Nivel: %d", Nome_jogador_input, n_maca_ant, jogar_number_ant);
-    set_char_by_cursor(EMPTY_ROW, 75, 18);
-    puts("|DIFICIL  - 3|");
-    set_char_by_cursor(EMPTY_ROW, 65, 18);
-    puts("|MEDIO - 2|");
-    set_char_by_cursor(EMPTY_ROW, 55, 18);
-    puts("|FACIL - 1|");
-    set_char_by_cursor(EMPTY_ROW, 89, 18);
-    puts("|Excluir Jogadas - 4|");
+    char *mensagem_dificuldade = "|DIFICIL -3|MEDIO - 2|FACIL - 1|Excluir Jogadas - 4|\0";
+
+    int div_y = DIMENSAO_Y / 3, s_x = (DIMENSAO_X / 3) - (size / 2);
+
+    set_char_by_cursor(EMPTY_ROW, s_x, div_y);
+    printf("%s", mensagem_dificuldade);
+   
+    div_y = DIMENSAO_Y / 5, s_x = (DIMENSAO_X / 5) - (size / 2);
+
+    set_char_by_cursor(EMPTY_ROW, s_x, div_y);
+    printf("\nJogador: %s  ----  Macas: %d ---- Nivel: %d", Nome_jogador_input, n_maca_ant, jogar_number_ant);
+
     imprime_mensagem("O qual nivel de jogo voce deseja jogar? ");
     scanf("%d", &jogar_number);
     system("pause>nul");
