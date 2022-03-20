@@ -488,12 +488,12 @@ void menu_inicial(char Nome_jogador){
 
     char *mensagem_dificuldade = "|DIFICIL -3|MEDIO - 2|FACIL - 1|Excluir Jogadas - 4|\0";
 
-    int div_y = DIMENSAO_Y / 3, s_x = (DIMENSAO_X / 3) - (size / 2);
+    int div_y = DIMENSAO_Y / 3, s_x = (DIMENSAO_X / 3) - (size / 3);
 
     set_char_by_cursor(EMPTY_ROW, s_x, div_y);
     printf("%s", mensagem_dificuldade);
    
-    div_y = DIMENSAO_Y / 5, s_x = (DIMENSAO_X / 5) - (size / 2);
+    div_y = DIMENSAO_Y / 5, s_x = (DIMENSAO_X / 5) - (size / 5);
 
     set_char_by_cursor(EMPTY_ROW, s_x, div_y);
     printf("\nJogador: %s  ----  Macas: %d ---- Nivel: %d", Nome_jogador_input, n_maca_ant, jogar_number_ant);
