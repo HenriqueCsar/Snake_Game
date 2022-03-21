@@ -495,7 +495,7 @@ void menu_inicial(char Nome_jogador){
    
     div_y = DIMENSAO_Y / 5, s_x = (DIMENSAO_X / 5) - (size / 5);
 
-    set_char_by_cursor(EMPTY_ROW, s_x, div_y);
+    set_char_by_cursor(EMPTY_ROW, div_y, s_x);
     printf("\nJogador: %s  ----  Macas: %d ---- Nivel: %d", Nome_jogador_input, n_maca_ant, jogar_number_ant);
 
     imprime_mensagem("O qual nivel de jogo voce deseja jogar? ");

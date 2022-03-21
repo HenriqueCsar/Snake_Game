@@ -6,7 +6,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apresentação Jogo da Cobrinha</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="./style.css">
+    <style>body, *{
+        box-sizing: border-box;
+        transition: all 1.50s;
+    }
+    
+    body{
+        background-color: #f2f2f2;
+    }
+    
+    
+    .nome-apresentacao{
+        color: #123e6b;
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 5px;
+        letter-spacing: 0.08em;
+    }
+    
+    
+    div.select{
+        padding:10px 25px;
+        background-color: white;
+        border:1px solid rgba(0, 0, 0, 0.342);
+        color:rgba(0, 0, 0, 0.849);
+        position: relative;
+        border-radius:5px;
+        padding-right:100px;
+        cursor: pointer;
+    }
+    
+    div.select:after {
+        border-radius:5px;
+        content: '\25BC';
+        position: absolute;
+        top: 0;
+        right:0;
+        bottom: 0;
+        font-size: 10px;
+        color: rgb(0, 0, 0);
+        padding: 15px 15px;
+        pointer-events: none;
+    }
+    
+    
+    @keyframes anim_option{
+        from{
+            opacity:0%;
+        }
+        to{
+            opacity:100%;
+        }
+    }
+    
+    .option{
+        display:none;
+    position:absolute;
+    top:50px;
+    left:0;
+    width:100%;
+    border-radius:5px;
+    background-color: white;
+    padding:10px 10px;
+    z-index: 10;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.178);
+    animation: anim_option 0.60s alternate 0s;
+    }
+    
+    a{text-decoration: none; color:rgb(20, 20, 20);}
+    a:hover{text-decoration: none; color:white;}
+    
+    
+    .option_final{letter-spacing:0.05em;cursor:pointer;margin-top:10px;  font-size: 15px; transition:padding 0.30s}
+    
+    .option_final:hover{background-color: #123e6b; color:white;border-radius:2px; padding-left:10px}
+    
+    
+    
+    .select_disabled{
+        user-select: none; 
+    }
+    
+    .selected{
+        color:red;
+        display: none;
+    }
+    
+    
+    .red{
+        color:red;
+    }
+    
+    
+    .center{
+        position:relative;
+        width:20%;
+        left:calc(50% - 20%/2);
+    }
+    
+    .participante{
+        border:0.5px solid rgba(0, 0, 0, 0.192);
+        border-radius:2px;
+        margin-left:10px;
+        display: block;
+        padding:10px 25px;
+        position: relative;
+        height:200px;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.13);
+    }
+    
+    .participante img{
+        border-radius:3px;
+    }
+    
+    .text-titulo{
+        font-weight: bolder;
+        font-size:20px;
+        letter-spacing:0.06em;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color:#123e6b;
+        margin-bottom: 10px;
+    }
+    
+    .text-descricao{
+        font-size:15px;
+        letter-spacing:0.03em;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color:#3a3b3b;
+        margin-bottom: 10px;
+        text-align:justify;
+        display:block;
+    }
+    
+    .menu-img, .player-img, .pontos-img, .dificuldade-img, .ultimas_jogadas-img{
+        opacity: 85%;
+        transition: opacity 0.25s;
+        cursor: pointer;
+    }
+    
+    .menu-img:hover, .player-img:hover,.pontos-img:hover, .ultimas_jogadas-img:hover, .dificuldade-img:hover{
+        opacity: 100%;
+    }
+    
+    .comentario{
+        color:white;
+    }
+    
+    
+    .txt-code-menu, .txt-code-dificuldade, .txt-code-player, .txt-code-pontos, .txt-code-ultimas_jogadas{
+        background-color: black;
+        border-radius:2px;
+        color:rgb(13, 202, 13);
+        display:none;
+        margin-top:10px;
+        padding-top:10px;
+    }
+    </style>
 </head>
 
 <body>
@@ -21,9 +176,9 @@
                         <div class="select select_disabled">
                             <span style="font-weight: bolder;letter-spacing:0.05em;color:rgba(0, 0, 0, 0.616)">Edições</span>
                             <div class="option">
-                                <a href="#menu"><div class="option_final"> - Menu</div></a>
-                                <a href="#dificuldade"><div class="option_final"> - Dificuldade</div></a>
-                                <a href="#personagem"><div class="option_final">Personagem</div></a>
+                                <a href="#menu"><div class="option_final">Menu</div></a>
+                                <a href="#dificuldade"><div class="option_final">Dificuldade</div></a>
+                                <a href="#player"><div class="option_final">Player</div></a>
                                 <a href="#pontos"><div class="option_final">Pontos</div></a>
                                 <a href="#ultimas_jogadas"><div class="option_final">Ultimas Jogadas</div></a>
                                 <a href="#Atualizacao"><div class="option_final">Atualização</div></a>
@@ -40,7 +195,7 @@
                     <div class="row" style="height:200px;overflow-y: scroll;">
                     <div class="participante col">
                         HENRIQUE C
-                        <img src="henriquec.jpg" width="100%">
+                        <a href="#henrique"><img src="https://i.ibb.co/6Drrzcx/henriquec.jpg" width="100%"></a>
                     </div>
                     <div class="participante col">
                         HENRIQUE B 
@@ -48,23 +203,23 @@
                     </div>
                     <div class="participante col">
                         Bruno
-                        <img src="bruno.jpg" width="100%">
+                        <img src="https://i.ibb.co/RTBxrzV/bruno.jpg" width="100%">
                     </div>
                     <div class="participante col">
                         Danilo
-                        <img src="danilo.jpg" width="100%">
+                        <img src="https://i.ibb.co/Fw0p2tw/danilo.jpg" width="100%">
                     </div>
                     <div class="participante col">
                         Ruan
-                        <img src="pp.jpg" width="100%">
+                        <img src="https://i.ibb.co/ScF0HRf/pp.jpg" width="100%">
                     </div>
                     <div class="participante col">
                         Emanuel
-                        <img src="emanuel.jpg" width="100%">
+                        <img src="https://i.ibb.co/ZSghPj3/emanuel.jpg" width="100%">
                     </div>
                     <div class="participante col">
                         Felipe
-                        <img src="felipe.jpg" width="100%">
+                        <img src="https://i.ibb.co/Vp3LjTB/felipe.jpg" width="100%">
                     </div>
                 </div>
                 </div>
@@ -73,10 +228,165 @@
     </header>
     <aside>
     <div class="container">
+        <div class="menu" id="menu">
         <br>
         <span class="text-titulo" id="menu">Menu</span>
         <span class="text-descricao">O nosso menu tem as seguintes seções analisando da esquerda para direita: Histórico de Jogadas, Ultimo Jogo, Descrição de Nível e tem um input que tem o intuito de receber um número para o algoritmo reconhecer que nível o personagem deseja jogar.</span>
-        <img class="menu-img" src="menu.png" width="100%">
+        <img class="menu-img" src="https://i.ibb.co/1R31T9W/menu.png" width="100%">
+        <pre class="txt-code-menu">
+            void menu_inicial(char Nome_jogador){
+                int res1;
+                system("cls");
+                char *filename = "records.txt";
+                FILE *fp = fopen(filename, "r");
+                res1 = findSize("records.txt");
+            
+            
+                char ch;
+                set_char_by_cursor(EMPTY_ROW, 16, 12);
+                printf("Ultimas Jogadas: \n");
+                while ((ch = fgetc(fp)) != EOF)
+                    putchar(ch);
+                fclose(fp);
+                set_char_by_cursor(EMPTY_ROW, 57, 11);
+                
+                int size = 1;
+            
+                <span id="henrique" style="color:red">char *mensagem_dificuldade = "|DIFICIL -3|MEDIO - 2|FACIL - 1|Excluir Jogadas - 4|\0";
+            
+                int div_y = DIMENSAO_Y / 3, s_x = (DIMENSAO_X / 3) - (size / 3);
+            
+                set_char_by_cursor(EMPTY_ROW, s_x, div_y);
+                printf("%s", mensagem_dificuldade);
+               
+                div_y = DIMENSAO_Y / 5, s_x = (DIMENSAO_X / 5) - (size / 5);
+            
+                set_char_by_cursor(EMPTY_ROW, div_y, s_x);
+                printf("\nJogador: %s  ----  Macas: %d ---- Nivel: %d", Nome_jogador_input, n_maca_ant, jogar_number_ant);
+            </span>
+                imprime_mensagem("O qual nivel de jogo voce deseja jogar? ");
+                scanf("%d", &jogar_number);
+                system("pause>nul");
+            
+            }
+            
+        </pre>        
+    </div>
+
+    <div class="dificuldade" id="dificuldade">
+        <br>
+        <span class="text-titulo" id="menu">Dificuldade</span>
+        <span class="text-descricao">O nosso menu contém três dificuldades sendo elas: Facil, Médio e Dificil</span>
+        <img class="dificuldade-img" src="https://i.ibb.co/0J4PkBW/dificuldades.png" width="100%">
+        <pre class="txt-code-dificuldade">
+            switch(jogar_number){
+                case 4:
+                    remove("records.txt");
+                    main();
+                    break;
+                case 3:
+                    nivel=3;
+                    system("cls");
+                    imprime_mensagem("Qual seu nome?: ");
+                    speed = 50;
+                    OBS_RAIZES = 30;
+                    scanf("%s", &Nome_jogador_input);
+                    break;
+                case 2:
+                    nivel=2;
+                    system("cls");
+                    imprime_mensagem("Qual seu nome?: ");
+                    speed = 70;
+                    OBS_RAIZES = 15; //Variavel de incrementação de obstáculos
+                    scanf("%s", &Nome_jogador_input);
+                    break;
+                case 1:
+                    nivel=1;
+                    system("cls");
+                    imprime_mensagem("Qual seu nome?: ");
+                    speed = 100;
+                    OBS_RAIZES = 10;
+                    scanf("%s", &Nome_jogador_input);
+                    break;
+            }
+        
+        </pre>
+    </div>
+    <br>
+    <div class="player" id="player">
+        <span class="text-titulo" id="menu">Player</span>
+        <span class="text-descricao">Essa seção é a responsavel por incluir o nome do jogador no arquivo</span>
+        <img class="player-img" src="https://i.ibb.co/s1nTNb1/player.png" width="100%">
+        <pre class="txt-code-player">
+            
+    if(n_maca != 0){
+        char *buf; 
+        size_t sz;
+        sz = snprintf(NULL, 0, "\nJogador: %s  ----  Macas: %d ---- Nivel: %d\n", <span class="red">Nome_jogador_input</span>, n_maca, jogar_number);
+        buf = (char *)malloc(sz + 1);
+        snprintf(buf, sz+1, "\nJogador: %s  ----  Macas: %d ---- Nivel: %d\n", <span class="red">Nome_jogador_input</span>, n_maca, jogar_number);
+        FILE *file;
+    
+        file = fopen("records.txt", "a+");
+       
+        fwrite(buf, 1, sizeof("\nJogador: %d  ----  Macas: %d ---- Nivel: %d  \n"), file);
+        fclose(file);
+        }
+        </pre>
+    </div>
+    <br>
+    <div class="pontos" id="pontos">
+        <span class="text-titulo" id="menu">Pontos</span>
+        <span class="text-descricao">Essa seção é a responsavel por fazer a contagem de pontos</span>
+        <img class="pontos-img" src="https://i.ibb.co/thZ7gcP/pontos.png" width="100%">
+        <pre class="txt-code-pontos">
+            
+void imprime_placar(int n_maca, int nivel){
+    
+    //Printar maçãs
+    set_char_by_cursor(EMPTY_ROW, 10, 2);
+    printf("%u", n_maca);
+    set_char_by_cursor(EMPTY_ROW, 3, 2);
+    printf("Macas:");
+
+    //Printar Nível
+    set_char_by_cursor(EMPTY_ROW, 22, 2);
+    printf("%u", nivel);
+    set_char_by_cursor(EMPTY_ROW, 15, 2);
+    printf("Nivel:");
+}
+
+........................................
+
+if(verifica_maca(elm_coli)){     <span class="comentario">//Faz a verificação se a cobra comeu a maçã, caso tenha comido ela retorna na função impreme_placar e atualiza</span>
+    printf("*");
+    n_maca=n_maca+1;
+    alimenta_cobra(cobra);
+    atualiza_maca(cobra, quadro);
+    imprime_placar(n_maca, nivel);
+}
+        </pre>
+    </div>
+    <br>
+    <div class="ultimas_jogadas" id="ultimas_jogadas">
+        <span class="text-titulo" id="menu">Ultimas Jogadas</span>
+        <span class="text-descricao">Essa seção é a responsavel por mostrar as ultimas jogadas no menu.</span>
+        <img class="ultimas_jogadas-img" src="https://i.ibb.co/WHCTtvW/ultimas-jogadas.png" width="100%">
+        <pre class="txt-code-ultimas_jogadas">
+            char ch;
+            set_char_by_cursor(EMPTY_ROW, 16, 12);
+            printf("Ultimas Jogadas: \n");
+            while ((ch = fgetc(fp)) != EOF)
+                putchar(ch);
+            fclose(fp);
+            set_char_by_cursor(EMPTY_ROW, 57, 11);
+            
+        </pre>
+    </div>
+    <br>
+    <div class="Atualizacao" id="Atualizacao">
+        <span class="text-titulo" id="menu">Atualização</span>
+        <span class="text-descricao">Versão V202290321.</span>
     </div> 
     </aside>
     <footer>
@@ -85,5 +395,31 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-<script src="script.js"></script>
+<script>
+    $(".select").click(function(){
+    $(".option").toggle()
+})
+
+$(".menu-img").click(function(){
+    $(".txt-code-menu").toggle()
+})
+
+
+$(".dificuldade-img").click(function(){
+    $(".txt-code-dificuldade").toggle()
+})
+
+$(".player-img").click(function(){
+    $(".txt-code-player").toggle()
+})
+
+
+$(".pontos-img").click(function(){
+    $(".txt-code-pontos").toggle()
+})
+
+$(".ultimas_jogadas-img").click(function(){
+    $(".txt-code-ultimas_jogadas").toggle()
+})
+</script>
 </html>
